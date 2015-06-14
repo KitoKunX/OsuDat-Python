@@ -11,6 +11,33 @@ import urllib.request
 import re
 import sys
 
+class OsuNews(object): #object containing recent news
+
+  def __init__(self):
+    self.url = "https://osu.ppy.sh"
+    self.rawData = self.getRawData(self.url)
+    self.dataArray = list()
+    self.newsCounter = 0
+    self.news = dict()
+    self.procData(self.rawData)
+    
+  #get the raw data
+  def getRawData(self, url):
+    data = urllib.request.urlopen(url).read().decode()
+    return data
+  
+  #process raw data
+  def procData(self, data):
+    x = data.split("<h2 class='ntitle'><a href='/p/news'>News</a></h2>")[1]
+    y = x.split("<div class='hug-bottom'>")[0].replace("\n", "")
+    self.dataArray = y.split('<div class="news-heading">')[1:]
+    for i in self.dataArray:
+      date = i.split("&nbsp;")[0]
+      link = 'https://osu.ppy.sh' + i.split('&nbsp;<a href="')[1].split('"><b>osu!')[0]
+      desc = i.split('<div class="news-text"><p>')[1].split('</p></div>')[0]
+      self.news[self.newsCounter] = {"link":link, "date":date, "description":desc}
+      self.newsCounter = self.newsCounter + 1
+
 
 class OsuUser(object): #Osu User class
 
