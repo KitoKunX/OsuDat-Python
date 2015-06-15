@@ -1,7 +1,7 @@
 ##################################
 #### Osu Data Module
 #### Author: kitokunx
-#### Version: 1.0
+#### Version: 1.1
 #### Contact: kitokunxd@gmail.com
 ##################################
 
@@ -51,6 +51,10 @@ class OsuUser(object): #Osu User class
       self.occupation = self.userOccupation(self.rawData)
       self.country = self.userCountry(self.rawData)
       self.consoles = self.userConsole(self.rawData)
+      self.userId = None
+      self.performancePoints = None
+      self.ranks = dict()
+      self.recent = dict()
     else:
       return None
 
